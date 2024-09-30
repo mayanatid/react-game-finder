@@ -8,21 +8,26 @@ interface Props {
   setSelectedPlatform: (platform: Platform | null) => void;
 }
 
-const PlatformSelector = ({ selectedPlatform, setSelectedPlatform }: Props) => {
-  const { data, error } = usePlatforms();
-  if (error) return null;
+const SortSelector = () => {
+  const sortCategories = [
+    "Relevance",
+    "Date added",
+    "Name",
+    "Realease Date",
+    "Popularity",
+    "Average rating",
+  ];
+  //   const { data, error, isLoading } = usePlatforms();
+  //   if (error) return null;
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        {selectedPlatform?.name || "Platforms"}
+        Ordered By: Relevance
       </MenuButton>
       <MenuList>
-        {data.map((platform) => (
-          <MenuItem
-            key={platform.id}
-            onClick={() => setSelectedPlatform(platform)}
-          >
-            {platform.name}
+        {sortCategories.map((cat) => (
+          <MenuItem key={cat} onClick={() => console.log(cat)}>
+            {cat}
           </MenuItem>
         ))}
       </MenuList>
@@ -30,4 +35,4 @@ const PlatformSelector = ({ selectedPlatform, setSelectedPlatform }: Props) => {
   );
 };
 
-export default PlatformSelector;
+export default SortSelector;
