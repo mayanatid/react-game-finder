@@ -4,30 +4,38 @@ import usePlatforms from "../hooks/usePlatforms";
 import { Platform } from "../hooks/useGames";
 
 interface Props {
-  selectedPlatform: Platform | null;
-  setSelectedPlatform: (platform: Platform | null) => void;
+  selectedSort: string;
+  setSelectedSort: (sort: string) => void;
 }
 
-const SortSelector = () => {
+const SortSelector = ({ selectedSort, setSelectedSort }: Props) => {
   const sortCategories = [
-    "Relevance",
-    "Date added",
-    "Name",
-    "Realease Date",
-    "Popularity",
-    "Average rating",
+    { value: "relevance", label: "Relevance" },
+    { value: "-added", label: "Date added" },
+    { value: "-name", label: "Name" },
+    { value: "-release", label: "Release date" },
+    { value: "metacritic", label: "Popularity" },
+    { value: "-rating", label: "Average Rating" },
   ];
   //   const { data, error, isLoading } = usePlatforms();
   //   if (error) return null;
+
+  const currentSortOrder = sortCategories.find(
+    (order) => order.value === selectedSort
+  );
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        Ordered By: Relevance
+        Order By: {currentSortOrder?.label}
       </MenuButton>
       <MenuList>
         {sortCategories.map((cat) => (
-          <MenuItem key={cat} onClick={() => console.log(cat)}>
-            {cat}
+          <MenuItem
+            key={cat.value}
+            value={cat.value}
+            onClick={() => setSelectedSort(cat.value)}
+          >
+            {cat.label}
           </MenuItem>
         ))}
       </MenuList>
